@@ -45,12 +45,12 @@ Start(Before := unset) {
   global isReady
   if !isReady
     return
-  isReady := false
-  IsSet(Before) && Before()
+  isReady := false, IsSet(Before) && Before()
   Tip.ShowTip(''), StaticBG.Show(), cfg.showMaskIST && Mask.Show()
   Tip.ShowTip('READY', , , 0), Cursor.SetIcon(Cursor.Icon.cross)
   Hotkey 'LButton', cfg.pasteInstantly ? StartClip : StartClipWithToolBar, 'On'
   Hotkey(cfg.cancelHK, Cancel, 'On'), Hotkey('RButton Up', Cancel, 'On')
+  Hotkey('``', (*) => (StaticBG.c := !StaticBG.c, StaticBG.ToggleWithCursor()), 'On')
 }
 
 ClearAll(excludes := []) {
@@ -71,13 +71,13 @@ ClearAll(excludes := []) {
 StartClip(*) {
   Tip.ShowTip(''), Mask.Show()
   g := GetGui(cfg.withTip).ConvertToPasteGui(), AutoSave(g)
-  ResetState(), HotKeysOff(cfg.cancelHK, 'LButton', 'RButton Up')
+  ResetState(), HotKeysOff(cfg.cancelHK, 'LButton', 'RButton Up', '``')
 }
 
 StartClipWithToolBar(*) {
   Tip.ShowTip(''), Cursor.SetIcon(Cursor.Icon.arrow), Mask.Show()
   g := GetGui(cfg.withTip), g.GetPos(&x, &y, &w, &h)
-  Hotkey 'LButton', 'Off'
+  HotKeysOff('LButton', '``')
 
   bar := MyToolBar(['取消', '确定']
     , x + w - MyToolBar.btnW * 2, y + h
