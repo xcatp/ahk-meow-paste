@@ -1,0 +1,45 @@
+下面罗列了所有可配置选项，大多在配置文件中也有注释。
+
+# 路径
+- groupRoot   ：分组根目录
+- historyPath ：自动保存
+- defaultSave : 分组中的默认分组
+
+- group : 自定义的分组目录列表
+  将从 my.txt 文件中读取；
+  定义一个数组如 names : [ meow ]
+
+# 截图框
+- noBgc : 使用透明背景（只有边框）
+- useRandomColor : 使用随机色背景
+
+# 微调截图框
+- frameBgc : 背景色
+- frameTRP : 透明度
+
+# 影罩
+- maskBgc  : 背景色
+- maskTRP  : 透明度
+- maskIST  : 立即显示
+- showMask : 是否显示
+
+# 贴图
+- borderWidth : 边框宽度
+- borderColor : 边框颜色（ARGB）
+- pasteIST    : 立即贴图（无法微调）
+
+# 其他
+- tip       : 截图时是否显示宽度等信息
+- recycle   : 销毁时放入回收站，而不是删除
+- trayClick : 点击托盘截图的次数
+
+# 持久化
+- autoSave   : 截图后是否自动保存为文件
+- saveSuffix : 保存文件的后缀（默认.png）
+
+# 热键
+- clipHK     : 开始截图
+- lastHK     : 贴上一张
+- cancelHK   : 取消截图
+- clearAllHK : 关闭所有贴图
+
