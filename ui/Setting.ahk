@@ -7,30 +7,24 @@ class Setting extends Gui {
     this.SetFont('s13', 'Microsoft YaHei UI')
     tab := this.AddTab3('w300', ["截图框", '遮罩', "贴图", "其他"])
     tab.UseTab(1)
-    noBgc := this.AddCheckbox('va Section', '使用透明色')
-    noBgc.Value := cfg.noBgc
+    noBgc := this.AddCheckbox('va Section', '使用透明色'), noBgc.Value := cfg.noBgc
 
     this.AddText('xs', '截图背景色:')
-    e1 := this.AddEdit('yp w60 Background' cfg.frameBgc)
-    frameBgc := this.AddButton('vh yp h30', cfg.frameBgc)
-    frameBgc.OnEvent('Click', (c, *) => (!cfg.noBgc && this._getColor(c, e1)))
+    e1 := this.AddEdit('yp w60 Background' cfg.frameBgc), frameBgc := this.AddButton('vh yp h30', cfg.frameBgc)
+    frameBgc.OnEvent('Click', (c, *) => (!cfg.noBgc && (this._getColor(c, e1), cfg.frameBgc := c.Text)))
 
-    this.AddText('xs', '背景透明度:')
-    frameTRP := this.AddEdit('vi yp w60 ' (cfg.noBgc && 'cred'), cfg.frameTRP)
+    this.AddText('xs', '背景透明度:'), frameTRP := this.AddEdit('vi yp w60 ' (cfg.noBgc && 'cred'), cfg.frameTRP)
     this.AddButton('yp h30', '预览').OnEvent('Click', (*) => this.ShowExample(frameBgc.Text, frameTRP.Value, '截图UI'))
 
     noBgc.OnEvent('Click', (c, *) => (this.ToggleState(c.Value, frameTRP), cfg.noBgc := !cfg.noBgc))
     ; ========
     tab.UseTab(2)
-    showMask := this.AddCheckbox('vb Section', '显示遮罩')
-    showMask.Value := cfg.showMask
-    maskIST := this.AddCheckbox('vc yp', '立即显示')
-    maskIST.Value := cfg.showMaskIST
+    showMask := this.AddCheckbox('vb Section', '显示遮罩'), showMask.Value := cfg.showMask
+    maskIST := this.AddCheckbox('vc yp', '立即显示'), maskIST.Value := cfg.showMaskIST
 
     this.AddText('xs', '遮罩背景色:')
-    e2 := this.AddEdit('yp w60 Background' cfg.maskBgc)
-    maskBgc := this.AddButton('vj yp h30', cfg.maskBgc)
-    maskBgc.OnEvent('Click', (c, *) => (cfg.showMask && this._getColor(c, e2)))
+    e2 := this.AddEdit('yp w60 Background' cfg.maskBgc), maskBgc := this.AddButton('vj yp h30', cfg.maskBgc)
+    maskBgc.OnEvent('Click', (c, *) => (cfg.showMask && (this._getColor(c, e2), cfg.maskBgc := c.Text)))
 
     this.AddText('xs', '遮罩透明度:')
     maskTRP := this.AddEdit('vk yp w60 ' (!cfg.showMask && 'cred'), cfg.maskTRP)
@@ -87,6 +81,7 @@ class Setting extends Gui {
   }
 
   OnClose() {
+    cfg.frameTRP := this['i'].Value, cfg.maskTRP := this['k'].Value
     if this.state != this.GetSnap()
       cfg.Sync()
   }
