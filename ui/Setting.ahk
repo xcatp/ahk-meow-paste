@@ -37,7 +37,7 @@ class Setting extends Gui {
     this.AddButton('yp h30', '预览').OnEvent('Click', (*) => this.ShowExample(maskBgc.Text, maskTRP.Value, '遮罩UI'))
 
     showMask.OnEvent('Click', (c, *) => (this.ToggleState(!c.Value, maskTRP), cfg.showMask := !cfg.showMask))
-    maskIST.OnEvent('Click', (c, *) => cfg.showMask := c)
+    maskIST.OnEvent('Click', (c, *) => cfg.showMaskIST := c.Value)
     ; ========
     tab.UseTab(3)
     pastIST := this.AddCheckbox('vd', '立即贴图')
