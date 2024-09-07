@@ -12,20 +12,21 @@ defaultSave : $groupRoot$\$default$  # 默认保存目录
 # color, transparent, etc
 frameBgc    : 53B558
 frameTRP    : 100
-maskBgc     : 382E0A
-maskTRP     : 100
+maskBgc     : 292318
+maskTRP     : 80
 borderWidth : 1
 borderColor : 0xff448E3A  # ARGB
 
 # switches
 noBgc          : 0  # 透明背景
 useRandomColor : 0  # 随机背景色（不推荐）
-maskIST        : 0  # 立即显示，而不是点击后
+maskIST        : 1  # 立即显示，而不是点击后
 showMask       : 1
 pasteIST       : 0  # 立即贴图（不能调整）
 tip            : 0
 autoSave       : 1  # 自动保存
 recycle        : 0  # 回收站，而不是删除
+withCursor     : 0  # 截图时是否显示光标（初始状态）
 
 # settings
 trayClick  : 1
