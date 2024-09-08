@@ -3,18 +3,23 @@
 
 class TimestampPlugin extends Plugin {
 
-  __New(color := '#FFFFFF', timeformat := 'yyyyMMdd_HHmmss', pos := 2, bgc := '000000') {
-    this.timeformat := timeformat, this.pos := pos, this.bgc := bgc
-    this.color := SubStr(color, 2)
+  __New(color := 'FFFFFF', timeformat := 'yyyyMMdd_HHmmss', bgc := '000000') {
+    this.timeformat := timeformat, this.bgc := bgc, this.color := color
   }
 
   Run() {
     Hook.Register(Events.OnTimestampGenerate, DisplayTimestamp)
 
-    DisplayTimestamp(g, *) {
+    DisplayTimestamp(params) {
+      DCon(params, &g, &cx, &cy), g.GetPos(&x, &y, &w, &h)
+      bw := w / 5, bh := h / 5, pos := 2
+      if cx <= bw
+        pos := cy <= bh ? 0 : cy.between(h - bh, h) ? 3 : pos
+      else if cx.between(w - bw, w)
+        pos := cy <= bh ? 1 : 2
       ts := TimestampPlugin.Timestamp(g.CreateTime(), this.timeformat, this.color, this.bgc)
-      g.GetPos(&x, &y, &w, &h), ts.Show(), ts.GetPos(, , &tw, &th)
-      switch this.pos {
+      ts.Show(), ts.GetPos(, , &tw, &th)
+      switch pos {
         case 0: tx := x, ty := y
         case 1: tx := x + w - tw, ty := y
         case 2: tx := x + w - tw, ty := y + h - th

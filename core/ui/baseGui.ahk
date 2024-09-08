@@ -54,7 +54,7 @@ _onCM(obj, ctrlObj, item, isR, x, y) {
   m.Add '关闭其他', (*) => ClearAll([obj])
   m.Add
   sm := Menu()
-  sm.Add '时间戳', (*) => AddTimestamp(obj)
+  sm.Add '时间戳', (*) => AddTimestamp(obj, x, y)
   m.Add '操作', sm
   m.Add
   m.Add '存入剪贴板', (*) => SaveToClipBoard(obj.Hwnd)
@@ -78,10 +78,10 @@ _onCM(obj, ctrlObj, item, isR, x, y) {
   m.Show()
 }
 
-AddTimestamp(g) {
+AddTimestamp(g, x, y) {
   if g.HasTimestamp()
     return
-  Hook._Exec(Events.OnTimestampGenerate, g)
+  Hook._Exec(Events.OnTimestampGenerate, [g, x, y])
   g.HasTimestamp(true)
 }
 

@@ -3,7 +3,7 @@
 #Include ./plugin.ahk
 #Include ./timestampGenerator.ahk
 
-tsp := TimestampPlugin('#B180D7')
+tsp := TimestampPlugin('B180D7')
 
 Plugin
   .Load(tsp)

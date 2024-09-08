@@ -9,7 +9,7 @@ class Events {
   static BeforePaste := 0x3
   ; param: null
   static AfterPaste := 0x4
-  ; param: g(object of paste gui)
+  ; param: [g(object of paste gui), clientX, clientY]
   static OnTimestampGenerate := 0x10      ; extend event
 }
 
@@ -36,7 +36,7 @@ class Hook {
 
   ; Register hook event callbacks
   static Register(event, callback) {
-    if !Hook.tasks[event] 
+    if !Hook.tasks[event]
       Hook.tasks[event] := []
     Hook.tasks[event].Push(callback)
   }
