@@ -25,7 +25,7 @@ zoom(hwnd, outOrIn) {
     return
   g.GetPos(&x, &y, &gw, &gh)
   if !g.HasProp('content') {
-    gw -= g.Border(), gh -= g.Border()
+    gw -= 2 * g.Border(), gh -= 2 * g.Border()
     g.content := {
       DC: GetMemDc(g.Hwnd, gw, gh, 0, 0),
       w: gw,

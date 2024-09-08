@@ -30,11 +30,19 @@ class TimestampPlugin extends Plugin {
       DrawTimestamp(g, tx - x, ty - y)
       ts.Destroy()
 
-      DrawTimestamp(target, x, y) {
+      DrawTimestamp(target, rx, ry) {
         hdc_frame := DllCall('GetDC', 'ptr', ts.Hwnd)
+        if target.HasProp('content') { ; 避免缩放时被覆盖
+          _x := rx = 0 ? 0 : target.content.w - tw
+          _y := ry = 0 ? 0 : target.content.h - th
+          DllCall("StretchBlt"
+            , 'ptr', target.content.DC, 'int', _x, 'int', _y, 'int', tw, 'int', th
+            , 'ptr', hdc_frame, 'int', 0, 'int', 0, 'int', tw, 'int', th
+            , 'UInt', 0x00660046)
+        }
         hdd_frame := DllCall('GetDC', 'ptr', target.Hwnd)
         DllCall("StretchBlt"
-          , 'ptr', hdd_frame, 'int', x, 'int', y, 'int', tw, 'int', th
+          , 'ptr', hdd_frame, 'int', rx, 'int', ry, 'int', tw, 'int', th
           , 'ptr', hdc_frame, 'int', 0, 'int', 0, 'int', tw, 'int', th
           , 'UInt', 0x00660046)
         DllCall('ReleaseDC', 'int', 0, 'ptr', hdc_frame)
