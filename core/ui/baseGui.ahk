@@ -1,4 +1,5 @@
 #Include inputBox.ahk
+#Include ../paste.ahk
 #Include ../zoom.ahk
 #Include ../hook.ahk
 
@@ -35,6 +36,7 @@ class BaseGui extends Gui {
     text.OnEvent('Click', (*) => this.MoveWin())
     text.OnEvent('DoubleClick', (*) => this.OnDestroy())
     this.eProxy := text
+    this.OnEvent('DropFiles', (g, ctrl, files, *) => files.foreach(v => PasteFile(v)))
   }
 
   MoveWin(*) {
