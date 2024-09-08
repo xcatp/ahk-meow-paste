@@ -15,10 +15,19 @@ PasteHistory(*) {
 }
 
 PasteFile(path) {
-  if !path
+  if !path {
+    Tip.ShowTip('错误的路径~')
     return
+  }
+  SplitPath path, , , &ext
+  if not ext ~= '^(?i:BMP|DIB|RLE|JPG|JPEG|JPE|JFIF|GIF|TIF|TIFF|PNG)$' {
+    Tip.ShowTip('不支持的类型' ext '喵~')
+    return
+  }
   DllCall("gdiplus\GdipCreateBitmapFromFile", 'uptr', StrPtr(path), 'uptr*', &pBitmap := 0)
   GetImageDimensions(pBitmap, &w, &h)
+  if w > A_ScreenWidth || h > A_ScreenHeight
+    Tip.ShowTip('文件尺寸太大了!')
 
   g := BaseGui(), x := 0, y := 0
   if w <= A_ScreenWidth - 100
