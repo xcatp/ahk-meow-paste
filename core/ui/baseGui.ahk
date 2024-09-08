@@ -91,8 +91,10 @@ Flip(g, vertical := false) {
   ; 不会修改内存DC，所以在缩放时会恢复
   ; 如果要同步修改，参考 timestampGenerator.ahk
   g.GetPos(, , &w, &h), hdc := DllCall('GetDC', 'ptr', g.Hwnd)
+  w -= 2 * g.Border(), h -= 2 * g.Border()
   DllCall("StretchBlt"
-    , 'ptr', hdc, 'int', 0, 'int', 0, 'int', w, 'int', h
+    , 'ptr', hdc, 'int', -g.Border(), 'int', -g.Border()
+    , 'int', w + g.Border(), 'int', h + g.Border()
     , 'ptr', hdc, 'int', vertical ? 0 : w, 'int', vertical ? h : 0
     , 'int', vertical ? w : -w, 'int', vertical ? -h : h
     , 'UInt', 0xCC0020)
