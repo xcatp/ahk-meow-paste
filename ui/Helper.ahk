@@ -8,7 +8,7 @@ class Helper extends Gui {
     this.SetFont('s13', 'consolas')
     this.AddListBox("xm r22 w150 0x100", ['基础操作', '注意事项', '配置文件', '关于'])
       .OnEvent('Change', (obj, *) => this.SwitchPage(obj))
-    this.AddEdit("yp r22 w450 ReadOnly vInfo", FileRead('./ui/doc/1.txt', 'utf-8'))
+    this.AddEdit("yp r22 w450 ReadOnly BackgroundFFFFFF vInfo", FileRead('./ui/doc/1.txt', 'utf-8'))
   }
 
   static Show(*) {
