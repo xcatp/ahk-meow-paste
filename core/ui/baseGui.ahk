@@ -55,6 +55,8 @@ _onCM(obj, ctrlObj, item, isR, x, y) {
   m.Add
   sm := Menu()
   sm.Add '时间戳', (*) => AddTimestamp(obj, x, y)
+  sm.Add '水平翻转', (*) => Flip(obj)
+  sm.Add '垂直翻转', (*) => Flip(obj, true)
   m.Add '操作', sm
   m.Add
   m.Add '存入剪贴板', (*) => SaveToClipBoard(obj.Hwnd)
@@ -83,6 +85,18 @@ AddTimestamp(g, x, y) {
     return
   Hook._Exec(Events.OnTimestampGenerate, [g, x, y])
   g.HasTimestamp(true)
+}
+
+Flip(g, vertical := false) {
+  ; 不会修改内存DC，所以在缩放时会恢复
+  ; 如果要同步修改，参考 timestampGenerator.ahk
+  g.GetPos(, , &w, &h), hdc := DllCall('GetDC', 'ptr', g.Hwnd)
+  DllCall("StretchBlt"
+    , 'ptr', hdc, 'int', 0, 'int', 0, 'int', w, 'int', h
+    , 'ptr', hdc, 'int', vertical ? 0 : w, 'int', vertical ? h : 0
+    , 'int', vertical ? w : -w, 'int', vertical ? -h : h
+    , 'UInt', 0xCC0020)
+  DllCall('ReleaseDC', 'int', 0, 'ptr', hdc)
 }
 
 DestroyGui(g) {
