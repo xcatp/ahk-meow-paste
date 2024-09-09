@@ -1,0 +1,48 @@
+tray:
++ c  : Snip
++ dc : 'Delay snip'
++ l  : 'Paste last'
++ of : 'Paste file'
++ s  : Setting
++ od : 'Open folder'
++ h  : Help
++ r  : Reload
++ e  : Exit
+
+paste:
++ c  : Close
++ co : 'Close others'
++ t  : Timestamp
++ h  : 'Horizontal flip'
++ v  : 'Vertical flip'
++ m  : Options
++ sc : 'Save to clipboard'
++ sf : 'Save as..'
++ d  : Destroy
++ cc : 'Close & Save2Clipboard'
++ cd : 'Close & Save2Group'
++ ng : 'Create group'
++ sg : 'Save to Group'
++ z  : 'Zoom: '
+
+common:
++ o : Ok
++ c : Cancel
++ m : meow~
+
+prompt:
++ r  : 'Local file have been recycled'
++ d  : 'Local file have been deleted'
++ nf : 'No such file'
++ cs : 'Created & Saved'
++ c  : 'Created successfully'
++ nh : 'No history files'
++ a  : 'No more'
++ e  : 'No such file path'
++ ee : 'Unsupported type'
++ es : 'File too large'
+
+savePrompt:
++ a : Saved!
++ s : 'Save to file'
++ e : Error!

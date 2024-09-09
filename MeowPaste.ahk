@@ -20,6 +20,7 @@ mcf := MeowConfEx.Of('./config.txt'), cfg := Conf()
 #Include core/history.ahk
 History.Init(cfg.historyPath)
 
+#Include local\i18n.ahk
 #Include plugin\index.ahk
 #Include core\main.ahk
 

@@ -52,30 +52,30 @@ class BaseGui extends Gui {
 
 _onCM(obj, ctrlObj, item, isR, x, y) {
   m := Menu()
-  m.Add '关闭', (*) => obj.OnDestroy()
-  m.Add '关闭其他', (*) => ClearAll([obj])
+  m.Add _t('paste.c'), (*) => obj.OnDestroy()
+  m.Add _t('paste.co'), (*) => ClearAll([obj])
   m.Add
   sm := Menu()
-  sm.Add '时间戳', (*) => AddTimestamp(obj, x, y)
-  sm.Add '水平翻转', (*) => Flip(obj)
-  sm.Add '垂直翻转', (*) => Flip(obj, true)
-  m.Add '操作', sm
+  sm.Add _t('paste.t'), (*) => AddTimestamp(obj, x, y)
+  sm.Add _t('paste.h'), (*) => Flip(obj)
+  sm.Add _t('paste.v'), (*) => Flip(obj, true)
+  m.Add _t('paste.m'), sm
   m.Add
-  m.Add '存入剪贴板', (*) => SaveToClipBoard(obj.Hwnd)
-  m.Add '图像另存为...', (*) => SaveToFileEx(obj.Hwnd)
+  m.Add _t('paste.sc'), (*) => SaveToClipBoard(obj.Hwnd)
+  m.Add _t('paste.sf'), (*) => SaveToFileEx(obj.Hwnd)
   m.Add
-  m.Add '销毁', (*) => DestroyGui(obj)
+  m.Add _t('paste.d'), (*) => DestroyGui(obj)
   m.Add
-  m.Add '关闭并存入剪贴板', (*) => SaveToClipBoard(obj.Hwnd, true)
-  m.Add '关闭并保存到默认组', (*) => SaveToFileEx(obj.Hwnd, cfg.defaultSavePath, , true)
+  m.Add _t('paste.cc'), (*) => SaveToClipBoard(obj.Hwnd, true)
+  m.Add _t('paste.cd'), (*) => SaveToFileEx(obj.Hwnd, cfg.defaultSavePath, , true)
   m.Add
   sm := Menu()
   Extend(sm, obj.Hwnd)
   sm.Add
-  sm.Add '新建分组', (*) => CreateGroup(obj.Hwnd)
-  m.Add '存入组', sm
+  sm.Add _t('paste.ng'), (*) => CreateGroup(obj.Hwnd)
+  m.Add _t('paste.sg'), sm
   sm := Menu()
-  sm.Add '缩放: ' obj.ZoomLevel(), noop
+  sm.Add _t('paste.z') obj.ZoomLevel(), noop
   sm.Add FormatTime(obj.CreateTime(), 'yyyy/MM/dd_HH:mm:ss'), noop
   m.Add
   m.Add obj.SizeW() ' x ' obj.SizeH(), sm
@@ -111,17 +111,17 @@ DestroyGui(g) {
   if FileExist(path) {
     if mcf.Get('recycle', 0) {
       FileRecycle(path)
-      Tip.ShowTip('已回收本地文件喵~')
+      Tip.ShowTip(_t('prompt.r'))
     } else {
       FileDelete(path)
-      Tip.ShowTip('已删除本地文件喵~')
+      Tip.ShowTip(_t('prompt.d'))
     }
     if g.HasProp('id')
       History.DelFile(g.id)
     HistoryGui.FlushCache()
     logger.Info('销毁文件：' path)
   } else {
-    Tip.ShowTip('没有找到对应文件喵...')
+    Tip.ShowTip(_t('prompt.nf'))
     logger.Warn('尝试删除不存在的文件')
   }
 }
@@ -147,9 +147,9 @@ CreateGroup(pass) {
     if ib.checked {
       path := cfg.groupRoot '\' ib.value
       SaveToFileEx(pass, path)
-      Tip.ShowTip('创建并保存了喵~')
+      Tip.ShowTip(_t('prompt.cs'))
     } else
-      Tip.ShowTip('创建成功喵~')
+      Tip.ShowTip(_t('prompt.c'))
     logger.Info('创建组：' ib.value)
   }
 }

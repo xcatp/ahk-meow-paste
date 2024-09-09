@@ -22,20 +22,20 @@ isReady := true
 
 tray := A_TrayMenu
   , tray.delete()
-  , tray.add('截图', (*) => Start((*) => Sleep(300)))
-  , tray.add('延时截图', (*) => Start((*) => DelayGui.Show(3)))
-  , tray.add('打开上一次截图', (*) => PasteHistory())
-  , tray.add('打开文件', (*) => PasteFile(FileSelect(, cfg.defaultSavePath)))
+  , tray.add(_t('tray.c'), (*) => Start((*) => Sleep(300)))
+  , tray.add(_t('tray.dc'), (*) => Start((*) => DelayGui.Show(3)))
+  , tray.add(_t('tray.l'), (*) => PasteHistory())
+  , tray.add(_t('tray.of'), (*) => PasteFile(FileSelect(, cfg.defaultSavePath)))
   , tray.add()
-  , tray.add('设置', (*) => Setting().Show())
-  , tray.add('打开文件夹', (*) => Run(A_ScriptDir))
+  , tray.add(_t('tray.s'), (*) => Setting().Show())
+  , tray.add(_t('tray.od'), (*) => Run(A_ScriptDir))
   , tray.add()
-  , tray.add('帮助', (*) => Helper.Show())
+  , tray.add(_t('tray.h'), (*) => Helper.Show())
   , tray.add()
-  , tray.add('重新启动', (*) => Reload())
-  , tray.add("退出", (*) => ExitApp())
+  , tray.add(_t('tray.r'), (*) => Reload())
+  , tray.add(_t('tray.e'), (*) => ExitApp())
   , tray.ClickCount := cfg.clickCount
-  , tray.Default := '截图'
+  , tray.Default := _t('tray.c')
 
 Hotkey cfg.clipHK, (*) => Start()
 Hotkey cfg.clearAllHK, (*) => ClearAll()
@@ -79,7 +79,7 @@ StartClipWithToolBar(*) {
   g := GetGui(cfg.withTip), g.GetPos(&x, &y, &w, &h)
   HotKeysOff('LButton', '``')
 
-  bar := MyToolBar(['取消', '确定']
+  bar := MyToolBar([_t('common.o'), _t('common.c')]
     , x + w - MyToolBar.btnW * 2, y + h
     , [(*) => Cancel_(bar, g), (*) => Bar_OkCB(bar, g.ConvertToPasteGui())])
   bar.Adapt(x, y, w, h).Show()

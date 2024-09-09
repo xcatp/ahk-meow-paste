@@ -11,7 +11,7 @@ SaveToClipBoard(hwnd, closePaste := false) {
     logger.Info('截全屏到剪贴板')
   }
   _SetBitmapToClipboard(pBitmap)
-  Tip.ShowTip('已存入喵~', , , , false)
+  Tip.ShowTip(_t('savePrompt.a'), , , , false)
 
   _SetBitmapToClipboard(pBitmap) {
     DllCall("gdiplus\GdipCreateHBITMAPFromBitmap", 'uptr', pBitmap, 'uptr*', &hBitmap := 0, "int", 0xffffffff)
@@ -34,7 +34,7 @@ SaveToFileEx(hwnd, _path := unset, fileName := unset, closePaste := false, suffi
   IsSet(fileName) || fileName := Meta.name '_' FormatTime(, "yyyyMMdd_HHmmss") suffix
   fullPath := IsSet(_path)
     ? _path '\' fileName
-    : FileSelect("S", cfg.defaultSavePath '\' fileName, '图像另存为', '(*' suffix ')')
+      : FileSelect("S", cfg.defaultSavePath '\' fileName, '图像另存为', '(*' suffix ')')
   WinSetAlwaysOnTop(1, 'ahk_id' hwnd)
   if !fullPath
     return
@@ -48,11 +48,11 @@ SaveToFileEx(hwnd, _path := unset, fileName := unset, closePaste := false, suffi
 
 SaveToFile(pBitmap, _path) {
   if !r := SaveBitmapToFile(pBitmap, _path) {
-    Tip.ShowTip('成功保存到文件喵~', , , , false)
+    Tip.ShowTip(_t('savePrompt.s'), , , , false)
     logger.Info('保存为文件，路径：' _path)
     return _path
   }
-  Tip.ShowTip('出错惹~', , , , false)
+  Tip.ShowTip(_t('savePrompt.e'), , , , false)
   logger.Info('文件保存失败，值：' r)
   return
 }

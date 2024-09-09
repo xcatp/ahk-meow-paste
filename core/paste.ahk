@@ -1,6 +1,6 @@
 PasteHistory(*) {
   if !History.FileList.Length {
-    Tip.ShowTip('没有历史截图喵~', , , 1000)
+    Tip.ShowTip(_t('prompt.na'), , , 1000)
     return
   }
   if r := History.Consume() {
@@ -11,23 +11,23 @@ PasteHistory(*) {
     g.Show(w, h, r.id)
     DisplayBitmap(pBitmap, g.Hwnd, w, h)
 
-  } else Tip.ShowTip('全部贴上了喵...', , , 1000)
+  } else Tip.ShowTip(_t('prompt.a'), , , 1000)
 }
 
 PasteFile(path) {
   if !path {
-    Tip.ShowTip('错误的路径~')
+    Tip.ShowTip(_t('prompt.e'))
     return
   }
   SplitPath path, , , &ext
   if not ext ~= '^(?i:BMP|DIB|RLE|JPG|JPEG|JPE|JFIF|GIF|TIF|TIFF|PNG)$' {
-    Tip.ShowTip('不支持的类型' ext '喵~')
+    Tip.ShowTip(_t('prompt.ee') ext _t('common.m'))
     return
   }
   DllCall("gdiplus\GdipCreateBitmapFromFile", 'uptr', StrPtr(path), 'uptr*', &pBitmap := 0)
   GetImageDimensions(pBitmap, &w, &h)
   if w > A_ScreenWidth || h > A_ScreenHeight
-    Tip.ShowTip('文件尺寸太大了!')
+    Tip.ShowTip(_t('prompt.es'))
 
   g := BaseGui(), x := 0, y := 0
   if w <= A_ScreenWidth - 100
