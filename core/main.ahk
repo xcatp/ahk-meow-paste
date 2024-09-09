@@ -115,14 +115,14 @@ ResetState() {
 }
 
 Cancel(*) {
-  HotKeysOff(cfg.cancelHK, 'RButton Up', 'LButton')
+  HotKeysOff(cfg.cancelHK, 'RButton Up', 'LButton', '``')
   ResetState(), Tip.ShowTip('CANCEL')
 }
 
 Cancel_(bar, g, *) {
   HotKeysOff(cfg.cancelHK, 'RButton Up', 'LButton', 'Left', 'Right', 'Up', 'Down'
     , '^Left', '^Right', '^Up', '^Down'
-    , '+Left', '+Right', '+Up', '+Down')
+    , '+Left', '+Right', '+Up', '+Down', '``')
   bar.Destroy(), g.Destroy(), ResetState(), Tip.ShowTip('CANCEL')
 }
 
