@@ -1,4 +1,4 @@
-#Include g:\AHK\git-ahk-lib\Extend.ahk
+#Include ..\_lib\Extend_Merged.ahk
 
 class Events {
   ; param: null

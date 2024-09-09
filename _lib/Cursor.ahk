@@ -1,6 +1,6 @@
 ﻿#Requires AutoHotkey v2.0
 
-#Include Extend.ahk
+#Include Extend_Merged.ahk
 
 class Cursor {
 

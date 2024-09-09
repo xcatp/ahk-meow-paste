@@ -1,4 +1,4 @@
-﻿#Include Extend.ahk
+﻿#Include Extend_Merged.ahk
 
 class Log {
 

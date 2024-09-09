@@ -1,5 +1,5 @@
 #Include ..\_lib\GdipStarter.ahk
-#Include ..\_lib\Extend.ahk
+#Include ..\_lib\Extend_Merged.ahk
 #Include ..\_lib\Tip.ahk
 #Include ..\_lib\Cursor.ahk
 

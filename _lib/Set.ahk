@@ -1,6 +1,6 @@
 ﻿#Requires AutoHotkey v2.0
 
-#Include _Array.ahk
+#Include Extend_Merged.ahk
 
 class Set extends Map {
   __new(value*) {

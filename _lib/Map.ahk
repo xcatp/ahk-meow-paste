@@ -1,4 +1,4 @@
-﻿#Include Extend.ahk
+﻿#Include Extend_Merged.ahk
 
 class GenericMap extends Map {
   __New(keyT, valT) {
