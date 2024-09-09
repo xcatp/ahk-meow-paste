@@ -8,8 +8,8 @@
 TraySetIcon '.\MeowPaste.ico'
 CoordMode 'Mouse', 'Screen'
 
-#Include g:\AHK\git-ahk-lib\util\log\log.ahk
-#Include g:\AHK\git-ahk-lib\util\config\MeowConfEx.ahk
+#Include _lib\log.ahk
+#Include _lib\MeowConfEx.ahk
 
 logger := Log('./log.txt'), logger.level := Log.LogLevel.Info
 OnError((e, *) => (logger.Err(e.What ':' e.Message ':' e.File ':' e.Line), 0))

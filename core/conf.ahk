@@ -1,4 +1,4 @@
-#Include g:\AHK\git-ahk-lib\Path.ahk
+#Include ..\_lib\Path.ahk
 
 Meta := {
   name: 'MeowPaste'

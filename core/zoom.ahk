@@ -1,5 +1,3 @@
-#Include g:\AHK\git-ahk-lib\Tip.ahk
-
 OnMessage(0x020A, OnWheel)
 
 OnWheel(wParam, lParam, msg, *) {

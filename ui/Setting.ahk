@@ -1,4 +1,4 @@
-#Include g:\AHK\git-ahk-lib\lib\component\ColorExtractor.ahk
+#Include ..\_lib\ColorExtractor.ahk
 
 class Setting extends Gui {
 

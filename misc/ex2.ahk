@@ -4,7 +4,7 @@
 CoordMode 'Mouse'
 CoordMode 'ToolTip'
 
-#Include g:\AHK\git-ahk-lib\lib\gdip\GdipStarter.ahk
+#Include ..\_lib\GdipStarter.ahk
 
 !q:: ExitApp
 

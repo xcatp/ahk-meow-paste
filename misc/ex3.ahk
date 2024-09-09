@@ -4,7 +4,7 @@
 CoordMode 'Mouse'
 CoordMode 'ToolTip'
 
-#Include g:\AHK\git-ahk-lib\lib\gdip\GdipStarter.ahk
+#Include ..\_lib\GdipStarter.ahk
 
 g2 := Gui('-Caption +ToolWindow +E0x00080000 +AlwaysOnTop')
 x := 115, y := 115, w := 600, h := 600

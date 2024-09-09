@@ -1,7 +1,7 @@
-#Include g:\AHK\git-ahk-lib\lib\gdip\GdipStarter.ahk
-#Include g:\AHK\git-ahk-lib\Extend.ahk
-#Include g:\AHK\git-ahk-lib\Tip.ahk
-#Include g:\AHK\git-ahk-lib\util\Cursor.ahk
+#Include ..\_lib\GdipStarter.ahk
+#Include ..\_lib\Extend.ahk
+#Include ..\_lib\Tip.ahk
+#Include ..\_lib\Cursor.ahk
 
 #Include zoom.ahk
 #Include hook.ahk

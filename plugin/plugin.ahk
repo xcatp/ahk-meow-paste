@@ -1,4 +1,4 @@
-#Include g:\AHK\git-ahk-lib\util\generic\Map.ahk
+#Include ..\_lib\Map.ahk
 
 class Plugin {
 
