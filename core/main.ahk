@@ -75,11 +75,11 @@ StartClip(*) {
 }
 
 StartClipWithToolBar(*) {
-  Tip.ShowTip(''), Cursor.SetIcon(Cursor.Icon.arrow), Mask.Show()
+  Tip.ShowTip(''), Mask.Show()
   g := GetGui(cfg.withTip), g.GetPos(&x, &y, &w, &h)
-  HotKeysOff('LButton', '``')
+  HotKeysOff('LButton', '``'), Cursor.SetIcon(Cursor.Icon.arrow)
 
-  bar := MyToolBar([_t('common.o'), _t('common.c')]
+  bar := MyToolBar([_t('common.c'), _t('common.o')]
     , x + w - MyToolBar.btnW * 2, y + h
     , [(*) => Cancel_(bar, g), (*) => Bar_OkCB(bar, g.ConvertToPasteGui())])
   bar.Adapt(x, y, w, h).Show()
