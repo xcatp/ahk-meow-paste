@@ -78,6 +78,8 @@ StartClipWithToolBar(*) {
   Tip.ShowTip(''), Mask.Show()
   g := GetGui(cfg.withTip), g.GetPos(&x, &y, &w, &h)
   HotKeysOff('LButton', '``'), Cursor.SetIcon(Cursor.Icon.arrow)
+  wList := _getWindowList(), i := 1
+  Hotkey 'MButton', SelectActiveWindow, 'on'
 
   bar := MyToolBar([_t('common.c'), _t('common.o')]
     , x + w - MyToolBar.btnW * 2, y + h
@@ -99,6 +101,41 @@ StartClipWithToolBar(*) {
   Hotkey '+Right', (*) => TinyAdapter(g, bar, -1, true), 'On'
   Hotkey '+Up', (*) => TinyAdapter(g, bar, 2, true), 'On'
   Hotkey '+Down', (*) => TinyAdapter(g, bar, -2, true), 'On'
+
+  _getWindowList() {
+    list := WinGetList(, , "Program Manager").filter(_f), rects := Map(), r := []
+    for v in list {
+      WinGetPos(&x, &y, &w, &h, 'ahk_id' v), key := JoinStr('-', x, y, w, h)
+      if !rects.Has(key)
+        rects.Set(key, v)
+    }
+    for k, v in rects
+      r.Push(v)
+    return r
+
+    _f(v) {
+      if WinGetMinMax('ahk_id' v) = -1
+        return false
+      WinGetPos(&x, &y, &w, &h, 'ahk_id' v)
+      if x > A_ScreenWidth or y > A_ScreenHeight or x + w < 0 or y + h < 0
+        return false
+      return true
+    }
+  }
+
+  SelectActiveWindow(*) {
+    _getWindowRectWithoutShadow(wList[Mod(i++, wList.Length) + 1], &x, &y, &w, &h)
+    g.Move(x, y, w, h), bar.Adapt(x, y, w, h).Move()
+
+    _getWindowRectWithoutShadow(hwnd, &x, &y, &w, &h) {
+      rect := Buffer(16)
+      DllCall('dwmapi\DwmGetWindowAttribute'
+        , 'ptr', hwnd, 'uint', 0x9
+        , 'ptr', rect, 'int', rect.Size)
+      x := NumGet(rect, 'int'), y := NumGet(rect, 4, 'int')
+      w := NumGet(rect, 8, 'int') - x, h := NumGet(rect, 12, 'int') - y
+    }
+  }
 }
 
 AutoSave(g) {
@@ -121,7 +158,7 @@ Cancel(*) {
 
 Cancel_(bar, g, *) {
   HotKeysOff(cfg.cancelHK, 'RButton Up', 'LButton', 'Left', 'Right', 'Up', 'Down'
-    , '^Left', '^Right', '^Up', '^Down'
+    , '^Left', '^Right', '^Up', '^Down', 'MButton'
     , '+Left', '+Right', '+Up', '+Down', '``')
   bar.Destroy(), g.Destroy(), ResetState(), Tip.ShowTip('CANCEL')
 }
@@ -129,7 +166,7 @@ Cancel_(bar, g, *) {
 Bar_OkCB(bar, g) {
   logger.Debug('微调截图，当前窗口：' WinGetTitle('A') || WinGetClass('A'))
   HotKeysOff(cfg.cancelHK, 'RButton Up', 'LButton', 'Left', 'Right', 'Up', 'Down'
-    , '^Left', '^Right', '^Up', '^Down'
+    , '^Left', '^Right', '^Up', '^Down', 'MButton'
     , '+Left', '+Right', '+Up', '+Down')
   bar.Destroy(), AutoSave(g)
   StaticBG.Close(), Mask.Close(), Tip.ShowTip('')
