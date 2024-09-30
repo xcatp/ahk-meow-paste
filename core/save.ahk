@@ -1,9 +1,9 @@
 SaveToClipBoard(hwnd, closePaste := false) {
   if hwnd {
     g := GuiFromHwnd(hwnd), g.GetPos(, , &w, &h)
-    pBitmap := BitmapFromHWND(g.Hwnd, w, h, g.Border(), g.Border())
+    pBitmap := BitmapFromHWND(g.Hwnd, w - 2 * g.Border(), h - 2 * g.Border(), 0, 0)
     if closePaste
-      g.Destroy()
+      g.OnDestroy()
   } else { ; if hwnd is 0, use window
     w := A_ScreenWidth, h := A_ScreenHeight
     pBitmap := BitmapFromHWND(hwnd, w, h, 0, 0)
@@ -34,15 +34,15 @@ SaveToFileEx(hwnd, _path := unset, fileName := unset, closePaste := false, suffi
   IsSet(fileName) || fileName := Meta.name '_' FormatTime(, "yyyyMMdd_HHmmss") suffix
   fullPath := IsSet(_path)
     ? _path '\' fileName
-      : FileSelect("S", cfg.defaultSavePath '\' fileName, '图像另存为', '(*' suffix ')')
+    : FileSelect("S", cfg.defaultSavePath '\' fileName, '图像另存为', '(*' suffix ')')
   WinSetAlwaysOnTop(1, 'ahk_id' hwnd)
   if !fullPath
     return
   g := GuiFromHwnd(hwnd)
   g.GetPos(, , &w, &h)
-  pBitmap := BitmapFromHWND(g.Hwnd, w, h, g.Border(), g.Border())
+  pBitmap := BitmapFromHWND(g.Hwnd, w - 2 * g.Border(), h - 2 * g.Border(), 0, 0)
   if closePaste
-    WinClose('ahk_id' hwnd)
+    g.OnDestroy()
   return SaveToFile(pBitmap, fullPath)
 }
 
