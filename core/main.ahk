@@ -103,6 +103,7 @@ StartClipWithToolBar(*) {
   Hotkey '+Down', (*) => TinyAdapter(g, bar, -2, true), 'On'
 
   _getWindowList() {
+    local x, y, w, h
     list := WinGetList(, , "Program Manager").filter(_f), rects := Map(), r := []
     for v in list {
       WinGetPos(&x, &y, &w, &h, 'ahk_id' v), key := JoinStr('-', x, y, w, h)
