@@ -30,15 +30,14 @@ SaveToClipBoard(hwnd, closePaste := false) {
 }
 
 SaveToFileEx(hwnd, _path := unset, fileName := unset, closePaste := false, suffix := cfg.saveSuffix) {
-  WinSetAlwaysOnTop(0, 'ahk_id' hwnd)
+  g := GuiFromHwnd(hwnd), WinSetAlwaysOnTop(0, g), g is PasteGui && g.d.Clear()
   IsSet(fileName) || fileName := Meta.name '_' FormatTime(, "yyyyMMdd_HHmmss") suffix
   fullPath := IsSet(_path)
     ? _path '\' fileName
     : FileSelect("S", cfg.defaultSavePath '\' fileName, '图像另存为', '(*' suffix ')')
-  WinSetAlwaysOnTop(1, 'ahk_id' hwnd)
+  WinSetAlwaysOnTop(1, g), g is PasteGui && g.d.Paint()
   if !fullPath
     return
-  g := GuiFromHwnd(hwnd)
   g.GetPos(, , &w, &h)
   pBitmap := BitmapFromHWND(g.Hwnd, w - 2 * g.Border(), h - 2 * g.Border(), 0, 0)
   if closePaste
