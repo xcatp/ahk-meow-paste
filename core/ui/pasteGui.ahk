@@ -6,6 +6,14 @@ class PasteGui extends BaseGui {
     super.OnDestroy(), this.d.OnDestroy()
   }
 
+  ExtendMenu(m) {
+    m.Add '边框', (*) => _toggleBorderDisplay()
+
+    _toggleBorderDisplay() {
+      d := this.d, d.v ? d.Clear() : d.Paint(), d.v := !d.v
+    }
+  }
+
   Show(x, y, w, h) {
     Hook._Exec(Events.BeforePaste, this)
 
@@ -45,7 +53,7 @@ class PasteGui extends BaseGui {
 
     __New(parent) {
       super.__New('+AlwaysOnTop -Caption +ToolWindow +E0x00080000')
-      this.parent := parent, this.b := mcf.Get('borderWidth', 1)
+      this.parent := parent, this.b := mcf.Get('borderWidth', 1), this.v := true
       this.borderPen := Gdip_CreatePen(mcf.Get('borderColor', 0xffC07B8E), this.b)
     }
 
@@ -57,6 +65,15 @@ class PasteGui extends BaseGui {
     Show() {
       super.Show(Format('x0 y0 w{} h{}', A_ScreenWidth, A_ScreenHeight))
       this.Paint()
+    }
+
+    Clear() {
+      hbm := CreateDIBSection(A_ScreenWidth, A_ScreenHeight)
+      hdc := CreateCompatibleDC(), obm := SelectObject(hdc, hbm)
+      G := Gdip_GraphicsFromHDC(hdc)
+      UpdateLayeredWindow(this.Hwnd, hdc, 0, 0, A_ScreenWidth, A_ScreenHeight)
+      Gdip_DeleteGraphics(G)
+      SelectObject(hdc, obm), DeleteObject(obm), DeleteDC(hdc)
     }
 
     Paint() {

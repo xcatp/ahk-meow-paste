@@ -28,6 +28,7 @@ class BaseGui extends Gui {
 
   OnDestroy(*) => this.Destroy()
   Zoom(*) => Noop()
+  ExtendMenu(m) => Noop()
 
   RegisterEvent() {
     this.GetPos(&x, &y, &w, &h)
@@ -59,6 +60,7 @@ _onCM(obj, ctrlObj, item, isR, x, y) {
   sm.Add _t('paste.t'), (*) => AddTimestamp(obj, x, y)
   sm.Add _t('paste.h'), (*) => Flip(obj)
   sm.Add _t('paste.v'), (*) => Flip(obj, true)
+  obj.ExtendMenu(sm)
   m.Add _t('paste.m'), sm
   m.Add
   m.Add _t('paste.sc'), (*) => SaveToClipBoard(obj.Hwnd)
