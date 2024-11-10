@@ -1,6 +1,5 @@
 ﻿# 配置文件
 
-# custom save groups, example: names : [ project, temp, meow ]
 group : @./my.txt
 
 groupRoot : $A_ScriptDir$\group  # root path
@@ -9,7 +8,7 @@ default     : default
 historyPath : $groupRoot$\history  # Autosave directory
 defaultSave : $groupRoot$\$default$  # Default save directory
 
-local : en # [zh | en]
+local : zh  # [zh | en]
 
 # color, transparent, etc
 frameBgc    : 53B558

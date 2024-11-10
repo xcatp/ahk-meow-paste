@@ -38,7 +38,7 @@ class Conf {
     this.groupRoot := mcf.Get('groupRoot', Path.Join(A_ScriptDir, 'group'))
     this.historyPath := mcf.Get('historyPath', Path.Join(this.groupRoot, 'history'))
     this.defaultSavePath := mcf.Get('defaultSave', Path.Join(this.groupRoot, 'group\default'))
-    this.groupsList := mcf.Get('group').Get('names')
+    this.groupsList := mcf.Get('group').Get('names', [])
   }
 
   Sync() {
