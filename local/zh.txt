@@ -24,6 +24,7 @@ paste:
 + ng : 新建分组
 + sg : 存入组
 + z  : 缩放
++ i  : 反色
 
 common:
 + o : 确定

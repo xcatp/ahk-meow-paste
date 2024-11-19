@@ -10,7 +10,7 @@ SaveToClipBoard(hwnd, closePaste := false) {
     DllCall("gdiplus\GdipDisposeImage", 'uptr', pBitmap)
     logger.Info('截全屏到剪贴板')
   }
-  _SetBitmapToClipboard(pBitmap)
+  _SetBitmapToClipboard(pBitmap), DeleteObject(pBitmap)
   Tip.ShowTip(_t('savePrompt.a'), , , , false)
 
   _SetBitmapToClipboard(pBitmap) {

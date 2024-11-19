@@ -60,6 +60,7 @@ _onCM(obj, ctrlObj, item, isR, x, y) {
   sm.Add _t('paste.t'), (*) => AddTimestamp(obj, x, y)
   sm.Add _t('paste.h'), (*) => Flip(obj)
   sm.Add _t('paste.v'), (*) => Flip(obj, true)
+  sm.Add _t('paste.i'), (*) => Invert(obj)
   obj.ExtendMenu(sm)
   m.Add _t('paste.m'), sm
   m.Add
@@ -99,10 +100,32 @@ Flip(g, vertical := false) {
   DllCall("StretchBlt"
     , 'ptr', hdc, 'int', -g.Border(), 'int', -g.Border()
     , 'int', w + g.Border(), 'int', h + g.Border()
-    , 'ptr', hdc, 'int', vertical ? 0 : w, 'int', vertical ? h : 0
-    , 'int', vertical ? w : -w, 'int', vertical ? -h : h
+    , 'ptr', hdc, 'int', vertical ? 0 : w, 'int', (vertical ? h : 0)
+    , 'int', vertical ? w : -w, 'int', (vertical ? -h : h)
     , 'UInt', 0xCC0020)
   DllCall('ReleaseDC', 'int', 0, 'ptr', hdc)
+}
+
+Invert(g) {
+  g.GetPos(, , &w, &h), w -= 2 * g.Border(), h -= 2 * g.Border()
+  hdc := DllCall('GetDC', 'ptr', g.Hwnd)
+  BitBlt(hdc, 0, 0, w, h, hdc, 0, 0, 0x00550009)
+  ; pBitmap := BitmapFromHWND(g.hwnd, w, h, 0, 0)
+  ; _invert(pBitmap, w, h)
+  ; DisplayBitmap(pBitmap, g.hwnd, w, h)
+
+  ; _invert(bitmap, w, h) { ; 很慢
+  ;   local r, g, b
+  ;   loop h {
+  ;     i := A_Index
+  ;     loop w {
+  ;       c := Gdip_GetPixel(bitmap, A_Index - 1, i - 1)
+  ;       a := Gdip_AFromARGB(c), r := Gdip_RFromARGB(c)
+  ;       g := Gdip_GFromARGB(c), b := Gdip_BFromARGB(c)
+  ;       Gdip_SetPixel(bitmap, A_Index - 1, i - 1, Gdip_ToARGB(a, 255 - r, 255 - g, 255 - b))
+  ;     }
+  ;   }
+  ; }
 }
 
 DestroyGui(g) {
