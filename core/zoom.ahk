@@ -21,15 +21,14 @@ zoom(hwnd, outOrIn) {
   g := GuiFromHwnd(hwnd)
   if !g.HasProp('eProxy')
     return
-  g.GetPos(&x, &y, &gw, &gh)
   if !g.HasProp('content') {
-    gw -= 2 * g.Border(), gh -= 2 * g.Border()
     g.content := {
-      DC: GetMemDc(g.Hwnd, gw, gh, 0, 0),
-      w: gw,
-      h: gh
+      DC: GetMemDc(g.Hwnd, g.SizeW(), g.SizeH(), 0, 0),
+      w: g.SizeW(),
+      h: g.SizeH()
     }
   }
+  g.GetPos(&x, &y, &gw, &gh)
   zoom := g.ZoomLevel(), frameDC := DllCall("GetDC", 'ptr', hwnd)
   if outOrIn = 'out' {
     if zoom = StretchRatio.min
@@ -57,7 +56,7 @@ zoom(hwnd, outOrIn) {
     }
   }
   w := Floor(w), h := Floor(h)
-  g.ZoomLevel(zoom).SizeW(w).SizeH(h)
+  g.ZoomLevel(zoom).SizeW(w - 2 * g.Border()).SizeH(h - 2 * g.Border())
 
   g.Move(, , w, h)
   g.eProxy.Move(, , w, h)
@@ -65,7 +64,7 @@ zoom(hwnd, outOrIn) {
   Sleep 0
 
   DllCall("StretchBlt"
-    , 'ptr', frameDC, 'int', 0, 'int', 0, 'int', w, 'int', h
+    , 'ptr', frameDC, 'int', 0, 'int', 0, 'int', w - 2 * g.Border(), 'int', h - 2 * g.Border()
     , 'ptr', g.content.DC, 'int', 0, 'int', 0, 'int', g.content.w, 'int', g.content.h
     , 'UInt', 0xCC0020)
   DllCall('ReleaseDC', 'int', 0, 'ptr', frameDC)

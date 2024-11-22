@@ -32,7 +32,7 @@ class BaseGui extends Gui {
 
   RegisterEvent() {
     this.GetPos(&x, &y, &w, &h)
-    this.SizeW(w).SizeH(h).OnEvent('ContextMenu', _onCM)
+    this.SizeW(w - 2 * this.Border()).SizeH(h - 2 * this.Border()).OnEvent('ContextMenu', _onCM)
     text := this.AddText('xs x0 y0 w' w ' h' h)
     text.OnEvent('Click', (*) => this.MoveWin())
     text.OnEvent('DoubleClick', (*) => this.OnDestroy())
@@ -75,7 +75,7 @@ _onCM(obj, ctrlObj, item, isR, x, y) {
   sm := Menu()
   Extend(sm, obj.Hwnd)
   sm.Add
-  sm.Add _t('paste.ng'), (*) => CreateGroup(obj.Hwnd)
+  sm.Add _t('paste.ng'), (*) => CreateGroup(obj)
   m.Add _t('paste.sg'), sm
   sm := Menu()
   sm.Add _t('paste.z') obj.ZoomLevel(), noop
@@ -95,37 +95,19 @@ AddTimestamp(g, x, y) {
 Flip(g, vertical := false) {
   ; 不会修改内存DC，所以在缩放时会恢复
   ; 如果要同步修改，参考 timestampGenerator.ahk
-  g.GetPos(, , &w, &h), hdc := DllCall('GetDC', 'ptr', g.Hwnd)
-  w -= 2 * g.Border(), h -= 2 * g.Border()
+  g.GetPos(, , &w, &h), hdc := DllCall('GetDC', 'ptr', g.Hwnd), b := g.Border()
   DllCall("StretchBlt"
-    , 'ptr', hdc, 'int', -g.Border(), 'int', -g.Border()
-    , 'int', w + g.Border(), 'int', h + g.Border()
-    , 'ptr', hdc, 'int', vertical ? 0 : w, 'int', (vertical ? h : 0)
+    , 'ptr', hdc, 'int', -b, 'int', -b
+    , 'int', w, 'int', h
+    , 'ptr', hdc, 'int', vertical ? -b : w - b, 'int', (vertical ? h - b : -b)
     , 'int', vertical ? w : -w, 'int', (vertical ? -h : h)
     , 'UInt', 0xCC0020)
   DllCall('ReleaseDC', 'int', 0, 'ptr', hdc)
 }
 
 Invert(g) {
-  g.GetPos(, , &w, &h), w -= 2 * g.Border(), h -= 2 * g.Border()
-  hdc := DllCall('GetDC', 'ptr', g.Hwnd)
+  hdc := DllCall('GetDC', 'ptr', g.Hwnd), w := g.SizeW(), h := g.SizeH()
   BitBlt(hdc, 0, 0, w, h, hdc, 0, 0, 0x00550009)
-  ; pBitmap := BitmapFromHWND(g.hwnd, w, h, 0, 0)
-  ; _invert(pBitmap, w, h)
-  ; DisplayBitmap(pBitmap, g.hwnd, w, h)
-
-  ; _invert(bitmap, w, h) { ; 很慢
-  ;   local r, g, b
-  ;   loop h {
-  ;     i := A_Index
-  ;     loop w {
-  ;       c := Gdip_GetPixel(bitmap, A_Index - 1, i - 1)
-  ;       a := Gdip_AFromARGB(c), r := Gdip_RFromARGB(c)
-  ;       g := Gdip_GFromARGB(c), b := Gdip_BFromARGB(c)
-  ;       Gdip_SetPixel(bitmap, A_Index - 1, i - 1, Gdip_ToARGB(a, 255 - r, 255 - g, 255 - b))
-  ;     }
-  ;   }
-  ; }
 }
 
 DestroyGui(g) {
@@ -161,7 +143,9 @@ Extend(sm, pass) {
 }
 
 CreateGroup(pass) {
-  ib := MyInputBox('输入组名:', '新建组', pass)
+  ; pass.Opt('+Disabled')
+  ib := MyInputBox('输入组名:', '新建组', pass.hwnd)
+  ; pass.Opt('-Disabled')
   if ib.Result = 'Ok' {
     DirCreate(cfg.groupRoot '\' ib.Value)
     groups := cfg.groupsList
@@ -171,7 +155,7 @@ CreateGroup(pass) {
     _.Sync()
     if ib.checked {
       path := cfg.groupRoot '\' ib.value
-      SaveToFileEx(pass, path)
+      SaveToFileEx(pass.Hwnd, path)
       Tip.ShowTip(_t('prompt.cs'))
     } else
       Tip.ShowTip(_t('prompt.c'))
