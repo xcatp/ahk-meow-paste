@@ -22,6 +22,12 @@ class MyToolBar extends Gui {
     return this
   }
 
+  Move(x := unset, y := unset) {
+    IsSet(x) && this.posX := x
+    IsSet(y) && this.posY := y
+    super.Move(this.posX, this.posY)
+  }
+
   Show(x := unset, y := unset) {
     IsSet(x) && this.posX := x
     IsSet(y) && this.posY := y

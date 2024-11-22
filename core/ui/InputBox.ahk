@@ -1,8 +1,8 @@
 class MyInputBox extends Gui {
-  
+
   __New(prompt, title, owner := unset, showOpt := '', placeHolder := '') {
     super.__New('+AlwaysOnTop -MinimizeBox -MaximizeBox', title)
-    this.Opt(IsSet(owner) ? ' +Owner' owner : '')
+    this.Opt(IsSet(owner) ? '+Owner' owner : '')
     this.SetFont('s12')
     this.AddText(, prompt)
     this.AddEdit('vInputBox', placeHolder).GetPos(, , &w)
@@ -33,7 +33,11 @@ class MyInputBox extends Gui {
 }
 
 if A_LineFile == A_ScriptFullPath {
-  ib := MyInputBox('test', 'title')
+  g := Gui('+AlwaysOnTop')
+  g.Show('w500 h500')
+  g.Opt('+Disabled')
+  ib := MyInputBox('test', 'title', g.Hwnd)
+  g.Opt('-Disabled')
   if ib.result = 'ok'
     MsgBox ib.value '/' ib.checked
 }

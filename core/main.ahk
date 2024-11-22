@@ -125,6 +125,7 @@ StartClipWithToolBar(*) {
   }
 
   SelectActiveWindow(*) {
+    local x, y, w, h
     _getWindowRectWithoutShadow(wList[Mod(i++, wList.Length) + 1], &x, &y, &w, &h)
     g.Move(x, y, w, h), bar.Adapt(x, y, w, h).Move()
 
