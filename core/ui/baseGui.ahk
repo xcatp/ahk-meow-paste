@@ -138,8 +138,7 @@ Extend(sm, pass) {
   for v in menuList
     sm.Add v, (itemName, itemPos, myMenu) => SaveToGroup(itemName, pass)
   defaultMenu := mcf.Get('default', 'default')
-  defaultMenuName := SubStr(defaultMenu, InStr(defaultMenu, '\', , -1) + 1)
-  sm.Check(defaultMenuName)
+  sm.Check(defaultMenu)
 }
 
 CreateGroup(pass) {

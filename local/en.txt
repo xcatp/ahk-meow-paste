@@ -8,6 +8,7 @@ tray:
 + h  : Help
 + r  : Reload
 + e  : Exit
++ g  : 'Switch group'
 
 paste:
 + c  : Close
@@ -19,12 +20,13 @@ paste:
 + sc : 'Save to clipboard'
 + sf : 'Save as..'
 + d  : Destroy
-+ cc : 'Close & Save2Clipboard'
-+ cd : 'Close & Save2Group'
++ cc : 'Close && Save2Clipboard'
++ cd : 'Close && Save2Group'
 + ng : 'Create group'
 + sg : 'Save to Group'
 + z  : 'Zoom: '
 + i  : Invert
++ b  : Border
 
 common:
 + o : Ok

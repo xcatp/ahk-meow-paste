@@ -7,7 +7,7 @@ class PasteGui extends BaseGui {
   }
 
   ExtendMenu(m) {
-    m.Add '边框', (*) => _toggleBorderDisplay()
+    m.Add _t('paste.b'), (*) => _toggleBorderDisplay()
 
     _toggleBorderDisplay() {
       d := this.d, d.v ? d.Clear() : d.Paint(), d.v := !d.v

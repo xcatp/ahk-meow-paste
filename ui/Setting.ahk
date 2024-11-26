@@ -1,4 +1,5 @@
 #Include ..\_lib\ColorExtractor.ahk
+#Include Helper.ahk
 
 class Setting extends Gui {
 
@@ -43,6 +44,7 @@ class Setting extends Gui {
     ; ========
     tab.UseTab(4)
     tip := this.AddCheckbox('vf', '截图时显示更多信息')
+    this.AddButton('h30', '帮助').OnEvent('Click', (*) => Helper.Show())
     tip.Value := cfg.withTip
     tip.OnEvent('Click', (c, *) => cfg.withTip := c.Value)
     ; ========
