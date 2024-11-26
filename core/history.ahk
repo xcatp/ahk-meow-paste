@@ -6,7 +6,7 @@ class History {
   static fileList := [], backPool := [], cur := -1
 
   static Init(_dir) {
-    l := this.fileList
+    l := this.fileList := [], this.backPool := []
     FS.ReadDir(_dir, _filter, fullPath => l.Push(fullPath), '*.*')
     this.cur := l.Length
 

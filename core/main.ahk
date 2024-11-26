@@ -15,7 +15,6 @@
 #Include ui/delayGui.ahk
 #Include ui/toolBarGui.ahk
 
-#Include ../ui/Helper.ahk
 #Include ../ui/Setting.ahk
 
 isReady := true
@@ -27,10 +26,10 @@ tray := A_TrayMenu
   , tray.add(_t('tray.l'), (*) => PasteHistory())
   , tray.add(_t('tray.of'), (*) => PasteFile(FileSelect(, cfg.defaultSavePath)))
   , tray.add()
+  , tray.add(_t('tray.g'), TrayGroup())
+  , tray.add()
   , tray.add(_t('tray.s'), (*) => Setting().Show())
   , tray.add(_t('tray.od'), (*) => Run(A_ScriptDir))
-  , tray.add()
-  , tray.add(_t('tray.h'), (*) => Helper.Show())
   , tray.add()
   , tray.add(_t('tray.r'), (*) => Reload())
   , tray.add(_t('tray.e'), (*) => ExitApp())
@@ -40,6 +39,23 @@ tray := A_TrayMenu
 Hotkey cfg.clipHK, (*) => Start()
 Hotkey cfg.clearAllHK, (*) => ClearAll()
 HotKey cfg.lastHK, (*) => PasteHistory()
+
+TrayGroup() {
+  m := Menu(), ['history', cfg.groupsList*].foreach(v => m.Add(v, _SwitchGroup))
+  m.Check('history'), lastChecked := 'history'
+  m.Add(), m.Add('select', _SelectOne)
+  return m
+
+  _SwitchGroup(_name, *) {
+    History.Init(cfg.groupRoot '\' _name)
+    m.Uncheck(lastChecked), m.Check(_name), lastChecked := _name
+  }
+
+  _SelectOne(_name, *) {
+    History.Init(DirSelect(cfg.groupRoot, 0))
+    m.Uncheck(lastChecked), m.Check(_name), lastChecked := _name
+  }
+}
 
 Start(Before := unset) {
   global isReady
@@ -155,14 +171,14 @@ ResetState() {
 
 Cancel(*) {
   HotKeysOff(cfg.cancelHK, 'RButton Up', 'LButton', '``')
-  ResetState(), Tip.ShowTip('CANCEL')
+  ResetState(), Tip.ShowTip('CANCEL'), ToolTip()
 }
 
 Cancel_(bar, g, *) {
   HotKeysOff(cfg.cancelHK, 'RButton Up', 'LButton', 'Left', 'Right', 'Up', 'Down'
     , '^Left', '^Right', '^Up', '^Down', 'MButton'
     , '+Left', '+Right', '+Up', '+Down', '``')
-  bar.Destroy(), g.Destroy(), ResetState(), Tip.ShowTip('CANCEL')
+  bar.Destroy(), g.Destroy(), ResetState(), Tip.ShowTip('CANCEL'), ToolTip()
 }
 
 Bar_OkCB(bar, g) {
