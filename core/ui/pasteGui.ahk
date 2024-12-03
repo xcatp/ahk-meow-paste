@@ -36,7 +36,7 @@ class PasteGui extends BaseGui {
   }
 
   MoveWin() {
-    MouseGetPos(&px, &py), WinGetPos(&wx, &wy, , , 'A')
+    MouseGetPos(&px, &py), WinGetPos(&wx, &wy, , , 'ahk_id' this.Hwnd)
     this.GetPos(&wx, &wy), this.d.GetPos(&xx, &yy)
     dx := wx - px, dy := wy - py, bx := xx - px, by := yy - py
     While GetKeyState("LButton", "P") {

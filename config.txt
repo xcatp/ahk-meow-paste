@@ -8,7 +8,7 @@ default     : default
 historyPath : $groupRoot$\history  # Autosave directory
 defaultSave : $groupRoot$\$default$  # Default save directory
 
-local : zh  # [zh | en]
+local : en  # [zh | en]
 
 # color, transparent, etc
 frameBgc    : 53B558

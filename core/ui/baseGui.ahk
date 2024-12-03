@@ -41,7 +41,7 @@ class BaseGui extends Gui {
   }
 
   MoveWin(*) {
-    MouseGetPos(&px, &py), WinGetPos(&wx, &wy, , , 'A')
+    MouseGetPos(&px, &py), WinGetPos(&wx, &wy, , , 'ahk_id' this.Hwnd)
     this.GetPos(&wx, &wy)
     dx := wx - px, dy := wy - py
     While GetKeyState("LButton", "P") {

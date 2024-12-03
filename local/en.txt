@@ -3,7 +3,7 @@ tray:
 + dc : 'Delay snip'
 + l  : 'Paste last'
 + of : 'Paste file'
-+ s  : Setting
++ s  : Settings
 + od : 'Open folder'
 + h  : Help
 + r  : Reload
