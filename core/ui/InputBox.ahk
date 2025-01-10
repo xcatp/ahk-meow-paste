@@ -35,7 +35,7 @@ class MyInputBox extends Gui {
 if A_LineFile == A_ScriptFullPath {
   g := Gui('+AlwaysOnTop')
   g.Show('w500 h500')
-  g.Opt('+Disabled')
+  g.Opt('+Disabled') ; 可以禁止操作
   ib := MyInputBox('test', 'title', g.Hwnd)
   g.Opt('-Disabled')
   if ib.result = 'ok'

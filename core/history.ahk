@@ -31,7 +31,7 @@ class History {
   static Consume() {
     if this.cur = -1
       throw Error('未初始化')
-    if this.backPool.Length {
+    if this.backPool.Length {  ; 如果`backpool`不为空，优先使用
       id := this.backPool.Pop()
       if this.fileList.Has(id)
         fullPath := this.fileList[id]

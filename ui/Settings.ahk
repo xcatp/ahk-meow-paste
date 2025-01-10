@@ -1,7 +1,7 @@
 #Include ..\_lib\ColorExtractor.ahk
 #Include Helper.ahk
 
-class Setting extends Gui {
+class Settings extends Gui {
 
   __New() {
     super.__New('+AlwaysOnTop')

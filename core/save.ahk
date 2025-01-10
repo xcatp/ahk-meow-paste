@@ -11,7 +11,7 @@ SaveToClipBoard(hwnd, closePaste := false) {
     logger.Info('截全屏到剪贴板')
   }
   _SetBitmapToClipboard(pBitmap), DeleteObject(pBitmap)
-  Tip.ShowTip(_t('savePrompt.a'), , , , false)
+  ; Tip.ShowTip(_t('savePrompt.a'), , , , false)
 
   _SetBitmapToClipboard(pBitmap) {
     DllCall("gdiplus\GdipCreateHBITMAPFromBitmap", 'uptr', pBitmap, 'uptr*', &hBitmap := 0, "int", 0xffffffff)
@@ -47,11 +47,11 @@ SaveToFileEx(hwnd, _path := unset, fileName := unset, closePaste := false, suffi
 
 SaveToFile(pBitmap, _path) {
   if !r := SaveBitmapToFile(pBitmap, _path) {
-    Tip.ShowTip(_t('savePrompt.s'), , , , false)
+    ; Tip.ShowTip(_t('savePrompt.s'), , , , false) ; 此处偶尔会使程序崩溃，找不到原因
     logger.Info('保存为文件，路径：' _path)
     return _path
   }
-  Tip.ShowTip(_t('savePrompt.e'), , , , false)
+  ; Tip.ShowTip(_t('savePrompt.e'), , , , false)
   logger.Info('文件保存失败，值：' r)
   return
 }

@@ -1,9 +1,9 @@
 class FrameGui extends Gui {
   ; An intermediate
-  
+
   __New() {
     super.__New('+AlwaysOnTop -Caption +ToolWindow +E0x00080000', 'frame')
-    this.borderPen := Gdip_CreatePen(0xff458588, 1)
+    this.borderPen := Gdip_CreatePen(0xff458588, 1) ; 边框大小和颜色
     this.staticHdc := DllCall("GetDC", 'ptr', StaticBG.insId)
     this.Show()
   }
@@ -45,6 +45,7 @@ class FrameGui extends Gui {
 
     Gdip_DrawRectangle(G, this.borderPen, x - 1, y - 1, w + 1, h + 1)
 
+    ; 尝试使用过局部更新，失败了；否则可以流畅许多
     UpdateLayeredWindow(this.Hwnd, hdc, 0, 0, A_ScreenWidth, A_ScreenHeight)
 
     SelectObject(hdc, obm)

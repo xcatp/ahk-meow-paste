@@ -15,7 +15,7 @@
 #Include ui/delayGui.ahk
 #Include ui/toolBarGui.ahk
 
-#Include ../ui/Setting.ahk
+#Include ../ui/Settings.ahk
 
 isReady := true
 
@@ -28,7 +28,7 @@ tray := A_TrayMenu
   , tray.add()
   , tray.add(_t('tray.g'), TrayGroup())
   , tray.add()
-  , tray.add(_t('tray.s'), (*) => Setting().Show())
+  , tray.add(_t('tray.s'), (*) => Settings().Show())
   , tray.add(_t('tray.od'), (*) => Run(A_ScriptDir))
   , tray.add()
   , tray.add(_t('tray.r'), (*) => Reload())
@@ -66,7 +66,7 @@ Start(Before := unset) {
   Tip.ShowTip('READY', , , 0), Cursor.SetIcon(Cursor.Icon.cross)
   Hotkey 'LButton', cfg.pasteInstantly ? StartClip : StartClipWithToolBar, 'On'
   Hotkey(cfg.cancelHK, Cancel, 'On'), Hotkey('RButton Up', Cancel, 'On')
-  Hotkey('``', (*) => (StaticBG.c := !StaticBG.c, StaticBG.ToggleWithCursor()), 'On')
+  Hotkey('``', (*) => (StaticBG.c := !StaticBG.c, StaticBG.ToggleWithCursor()), 'On') ; 切换光标捕获
 }
 
 ClearAll(excludes := []) {
@@ -218,7 +218,7 @@ ChangeSize(bar, g, *) {
 
   OverWhere(guiObj) {
     guiObj.GetPos(&guiX, &guiY, &guiW, &guiH), MouseGetPos(&x, &y)
-    bT := (guiW > 60 && guiH > 60) ? 25 : 10, r := 0
+    bT := (guiW > 60 && guiH > 60) ? 25 : 10, r := 0  ; bT指边缘范围、界限
     if x < guiX + bT                            ; left
       r += 3
     else if x > guiX + guiW - bT                ; right
@@ -297,7 +297,7 @@ MoveWinAndToolBar(frame, bar, cursorIcon, dire, *) {
     lx := nx, ly := ny
   }
   Cursor.SetIcon(Cursor.Icon.arrow), frame.GetPos(&x, &y, &w, &h)
-  wx := w < 0 ? x + w : x, wy := h < 0 ? y + h : y, ww := Abs(w), wh := Abs(h)
+  wx := w < 0 ? x + w : x, wy := h < 0 ? y + h : y, ww := Abs(w), wh := Abs(h) ; 确保不会超出屏幕
   if wx < 0
     ww += wx, wx := 0
   if wy < 0
@@ -306,7 +306,7 @@ MoveWinAndToolBar(frame, bar, cursorIcon, dire, *) {
     ww := A_ScreenWidth - wx
   if wy + wh > A_ScreenHeight
     wh := A_ScreenHeight - wy
-  frame.Move(wx, wy, ww, wh), bar.Adapt(wx, wy, ww, wh).Show()
+  frame.Move(wx, wy, ww, wh), bar.Adapt(wx, wy, ww, wh).Show() ; 调整完成
   if cfg.withTip
     ToolTip ww 'X' wh, wx, wy
 }
